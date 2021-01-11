@@ -14,11 +14,17 @@ import lombok.Data;
 @Data
 public class User {
 
-    // 用户标识
+    /**
+     * 用户标识
+     */
     private String id;
-    // 用户名称
+    /**
+     * 用户名称
+     */
     private String name;
-    // 用户邮箱
+    /**
+     * 用户邮箱
+     */
     private String email;
 
 }
