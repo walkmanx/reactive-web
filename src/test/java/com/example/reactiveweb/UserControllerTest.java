@@ -16,7 +16,7 @@ public class UserControllerTest {
     @Test
     public void testCreateUser() throws Exception {
         final User user = new User();
-        user.setId("123");
+        user.setId(1);
         user.setName("Test123");
         user.setEmail("test123@example.org");
         client.post().uri("/user/save")

@@ -24,12 +24,8 @@ import java.util.Objects;
 @RequestMapping("/user")
 public class UserController {
 
-    private final UserService userService;
-
     @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
+    private  UserService userService;
 
     @ResponseStatus(value = HttpStatus.NOT_FOUND,reason = "Resource not found")
     @ExceptionHandler(ServiceException.class)
@@ -42,7 +38,7 @@ public class UserController {
         return this.userService.list();
     }
 
-    public Mono<User> getById(@PathVariable("id") String id){
+    public Mono<User> getById(@PathVariable("id") Integer id){
         return this.userService.getById(id);
     }
 
@@ -52,14 +48,14 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public Mono<User> update(@PathVariable("id") String id,@RequestBody User user){
+    public Mono<User> update(@PathVariable("id") Integer id,@RequestBody User user){
         Objects.requireNonNull(user);
         user.setId(id);
         return this.userService.createOrUpdate(user);
     }
 
     @DeleteMapping("/{id}")
-    public Mono<User> delete(@PathVariable("id") String id){
+    public Mono<Void> delete(@PathVariable("id") Integer id){
         return this.userService.delete(id);
     }
 

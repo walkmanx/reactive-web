@@ -18,7 +18,7 @@ public class RESTClient {
 
     public static void main(String[] args) {
         final User user = new User();
-        user.setId("001");
+        user.setId(1);
         user.setName("Test");
         user.setEmail("test@example.org");
 

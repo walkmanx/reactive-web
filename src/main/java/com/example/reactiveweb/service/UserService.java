@@ -2,6 +2,8 @@ package com.example.reactiveweb.service;
 
 import com.example.reactiveweb.common.exception.ServiceException;
 import com.example.reactiveweb.domain.User;
+import com.example.reactiveweb.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -18,34 +20,42 @@ import java.util.concurrent.ConcurrentHashMap;
  * @description
  * @date 2020/8/14 上午 11:24
  */
-@Service
-public class UserService {
+public interface UserService {
 
-    private final Map<String, User> data = new ConcurrentHashMap<>();
+    /**
+     * 查询用户列表
+     *
+     * @return
+     */
+    Flux<User> list();
 
-    public Flux<User> list(){
-        return Flux.fromIterable(this.data.values());
-    }
+    /**
+     * 根据用户ids查询用户列表
+     * @param ids
+     * @return
+     */
+    Flux<User> getById(final Flux<Integer> ids);
 
-    public Flux<User> getById(final Flux<String> ids){
-        return ids.flatMap(id -> Mono.justOrEmpty(this.data.get(id)));
-    }
+    /**
+     * 根据id查询用户
+     * @param id
+     * @return
+     */
+    Mono<User> getById(final Integer id);
 
-    public Mono<User> getById(final String id){
-        return Mono.justOrEmpty(this.data.get(id))
-                .switchIfEmpty(Mono.error(new ServiceException()));
-    }
+    /**
+     * 保存或更新用户
+     * @param user
+     * @return
+     */
+    Mono<User> createOrUpdate(final  User user);
 
-    public Mono<User> createOrUpdate(final  User user){
-        if(user != null){
-            this.data.put(user.getId(),user);
-        }
-        return Mono.just(user);
-    }
-
-    public Mono<User> delete(final String id){
-        return Mono.justOrEmpty(this.data.remove(id));
-    }
+    /**
+     * 根据id删除用户
+     * @param id
+     * @return
+     */
+    Mono<Void> delete(final Integer id);
 
 
 }
