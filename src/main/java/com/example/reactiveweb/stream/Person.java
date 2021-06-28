@@ -2,8 +2,12 @@ package com.example.reactiveweb.stream;
 
 import lombok.Data;
 
+/**
+ * 人员
+ * @author Administrator
+ */
 @Data
-class Person {
+public class Person {
     private String name;
     private Integer age;
     private String country;
